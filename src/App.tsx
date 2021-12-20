@@ -1,7 +1,7 @@
 import React from 'react';
-import {HashRouter, Routes, Route, Navigate} from 'react-router-dom';
-import Nav from './components/Nav';
+import {HashRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
 import styled from 'styled-components';
+import Nav from './components/Nav';
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -15,20 +15,28 @@ const Main = styled.div`
 
 function App() {
   return (
-    <HashRouter>
+    <Router>
       <Wrapper>
         <Main>
-          <Routes>
-            <Route path="/tags" element={<Tags/>}/>
-            <Route path="/money" element={<Money/>}/>
-            <Route path="/statistics" element={<Statistics/>}/>
-            <Route path="/" element={<Navigate replace to="/Money"/>}/>
-            <Route path="*" element={<NoMatch/>}/>
-          </Routes>
+          <Switch>
+            <Route path="/tags">
+              <Tags/>
+            </Route>
+            <Route path="/money">
+              <Money/>
+            </Route>
+            <Route path="/statistics">
+              <Statistics/>
+            </Route>
+            <Redirect exact from="/" to="/money"/>
+            <Route path="*">
+              <NoMatch/>
+            </Route>
+          </Switch>
         </Main>
         <Nav/>
       </Wrapper>
-    </HashRouter>
+    </Router>
 
   );
 }
