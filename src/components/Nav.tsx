@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, NavLink} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import styled from 'styled-components';
 import Icon from './Icon';
 
@@ -25,7 +25,7 @@ const NavWrapper = styled.div`
           width: 24px;
           height: 24px;
         }
-        
+
         &.selected {
           background: #7ea459;
         }
