@@ -5,9 +5,11 @@ import styled from 'styled-components';
 const TagsSection = styled.section`
   background: #ffffff;
   padding: 12px 16px;
-  >ol{
+
+  > ol {
     margin: 0 -12px;
-    >li{
+
+    > li {
       display: inline-block;
       background: #6e6cad;
       border-radius: 18px;
@@ -16,7 +18,8 @@ const TagsSection = styled.section`
       margin: 8px 12px;
     }
   }
-  >button{
+
+  > button {
     background: none;
     border: none;
     padding: 2px 4px;
@@ -27,14 +30,33 @@ const TagsSection = styled.section`
 `;
 
 const NotesSection = styled.section`
-  border: 1px solid blue;
-`
+  background: #f5f5f5;
+  padding: 0 16px;
+  font-size: 14px;
+
+  > label {
+    display: flex;
+    align-items: center;
+
+    > span {
+      margin-right: 16px;
+      white-space: nowrap;
+    }
+
+    > input {
+      width: 100%;
+      height: 72px;
+      background: none;
+      border: none;
+    }
+  }
+`;
 const CategorySection = styled.section`
   border: 1px solid green;
-`
+`;
 const NumberPadSection = styled.section`
   border: 1px solid yellow;
-`
+`;
 
 
 function Money() {
@@ -52,7 +74,7 @@ function Money() {
       <NotesSection>
         <label>
           <span>备注</span>
-          <input type="text"/>
+          <input type="text" placeholder="在这里添加备注"/>
         </label>
       </NotesSection>
       <CategorySection>
