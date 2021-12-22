@@ -21,10 +21,6 @@ const Wrapper = styled.section`
       font-size: 14px;
       margin: 8px 12px;
       
-      &:hover{
-        cursor: pointer;
-      }
-
       &.selected {
         background: #6c71b1;
         color: white;
