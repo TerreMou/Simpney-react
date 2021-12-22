@@ -28,7 +28,9 @@ const NavWrapper = styled.div`
         }
 
         &.selected {
-          background: #7ea459;
+          background: #6c71b1;
+          color: white;
+          fill: white;
         }
       }
 
