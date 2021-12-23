@@ -1,27 +1,34 @@
 import Icon from '../../components/Icon';
-import React, {useState} from 'react';
+import React from 'react';
 import {Wrapper} from './NumberPadSection/Wrapper';
 import {generateOutput} from './NumberPadSection/generateOutput';
 
-const NumberPadSection = () => {
-  const [output, _setOutput] = useState<string>('0');
+type Props = {
+  value: number;
+  onChange: (value: number) => void
+  onOk?: () => void
+}
+const NumberPadSection: React.FC<Props> = (props) => {
+  const output = props.value.toString();
   const setOutput = (output: string) => {
-    if (output.length>16) {
-      output = output.slice(0, 16)
+    let value;
+    if (output.length > 16) {
+      value = parseFloat(output.slice(0, 16));
     } else if (output.length === 0) {
-      output = '0'
+      value = 0;
+    } else {
+      value = parseFloat(output);
     }
-    _setOutput(output);
+    props.onChange(value);
   };
   const onClickPad = (e: React.MouseEvent) => {
     const text = (e.target as HTMLButtonElement).textContent;
     if (text === null) {return;}
     if (text === 'OK') {
-      // TODO
-      console.log('确认')
+      if (props.onOk) {props.onOk();}
     }
-    if ('0123456789.'.split('').concat(['','清空']).indexOf(text) >= 0) {
-      setOutput(generateOutput(text, output))
+    if ('0123456789.'.split('').concat(['', '清空']).indexOf(text) >= 0) {
+      setOutput(generateOutput(text, output));
     }
   };
 
