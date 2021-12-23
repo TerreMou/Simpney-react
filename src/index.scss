@@ -1,37 +1,51 @@
 @import-normalize;
 @import 'helper';
 
-*{
+* {
   box-sizing: border-box;
 }
+
 *::before, *::after {
   box-sizing: border-box;
 }
-*{
+
+* {
   margin: 0;
   padding: 0;
 }
+
 ul, ol {
   list-style: none;
 }
+
 a {
   color: inherit;
   text-decoration: none;
 }
-body{
+
+body {
   font-family: $font-hei;
   font-size: 16px;
   line-height: 1.2;
   background: #f5f5f5;
 }
+
 button {
   font-family: inherit;
 }
+
 :focus {
   outline: none;
 }
+
 .icon {
   width: 1em;
   height: 1em;
   display: inline-block;
+}
+
+.oneLine {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
