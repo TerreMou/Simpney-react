@@ -10,17 +10,12 @@ import {TagsSection} from './money/TagsSection';
 const MyLayout = styled(Layout)`
   display: flex;
   flex-direction: column;
-`
+`;
 
 function Money() {
   return (
     <MyLayout>
-      <CategorySection>
-        <ul>
-          <li className="selected">支出</li>
-          <li>收入</li>
-        </ul>
-      </CategorySection>
+      <CategorySection/>
       <TagsSection/>
       <NoteSection/>
       <NumberPadSection>
