@@ -22,7 +22,7 @@ const Wrapper = styled.section`
   }
 `;
 
-const CategorySection = () => {
+const CategorySection: React.FC = () => {
   const [category, setCategory] = useState('-');
   const [categoryList] = useState<keys[]>(['-', '+']);
   const categoryMap = {'-': '支出', '+': '收入'};
