@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import {useTags} from 'useTags';
+import {createId} from 'lib/createId';
 
 const Wrapper = styled.section`
   flex-grow: 1;
@@ -54,7 +55,7 @@ const TagsSection: React.FC<Props> = (props) => {
         window.alert('标签名重复了');
       } else {
         newTagName !== '' ?
-          setTags([...tags, {id: Math.random(), name: newTagName}]) :
+          setTags([...tags, {id: createId(), name: newTagName}]) :
           window.alert('标签名不能为空');
       }
     }
