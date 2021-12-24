@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import Icon from 'components/Icon';
 import {Button} from 'components/Button';
 import {ButtonWrapper} from 'components/ButtonWrapper';
-import {Input} from '../components/Input';
+import {Input} from 'components/Input';
 
 const Topbar = styled.header`
   display: flex;
@@ -26,16 +26,11 @@ type Params = {
   id: string
 }
 const TagEdit: React.FC = () => {
-  const {findTag, updateTag} = useTags();
+  const {findTag, updateTag, deleteTag} = useTags();
   let {id: idString} = useParams<Params>(); // 拿到当前 url 的 id, 重命名为 idString
   const tag = findTag(parseInt(idString));
-  return (
-    <Layout>
-      <Topbar>
-        <Icon name="left"/>
-        <span>编辑标签</span>
-        <Icon/>
-      </Topbar>
+  const tagContent = (tag: { id: number, name: string }) => (
+    <div>
       <InputWrapper>
         <Input type="text" label="标签名"
                value={tag.name}
@@ -43,8 +38,18 @@ const TagEdit: React.FC = () => {
                  updateTag(tag.id, {name: e.target.value})}/>
       </InputWrapper>
       <ButtonWrapper>
-        <Button>删除标签</Button>
+        <Button onClick={() => deleteTag(tag.id)}>删除标签</Button>
       </ButtonWrapper>
+    </div>
+  );
+  return (
+    <Layout>
+      <Topbar>
+        <Icon name="left"/>
+        <span>编辑标签</span>
+        <Icon/>
+      </Topbar>
+      {tag ? tagContent(tag) : <ButtonWrapper>tag 不存在</ButtonWrapper>}
     </Layout>
   );
 };
