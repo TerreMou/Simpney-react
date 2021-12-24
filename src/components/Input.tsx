@@ -12,11 +12,10 @@ const Label = styled.label`
 
   > input {
     width: 100%;
-    height: 56px;
+    line-height: 44px;
     background: none;
     border: none;
   }
-
 `;
 
 type Props = {

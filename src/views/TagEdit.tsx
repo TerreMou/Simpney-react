@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Icon from 'components/Icon';
 import {Button} from 'components/Button';
 import {ButtonWrapper} from 'components/ButtonWrapper';
+import {Input} from '../components/Input';
 
 const Topbar = styled.header`
   display: flex;
@@ -36,12 +37,9 @@ const TagEdit: React.FC = () => {
         <span>编辑标签</span>
         <Icon/>
       </Topbar>
-
-      <label>
-        <span>标签名</span>
-        <input type="text"
-        />
-      </label>
+      <InputWrapper>
+        <Input type="text" label="标签名" value={tag.name}/>
+      </InputWrapper>
 
       <ButtonWrapper>
         <Button>删除标签</Button>
