@@ -1,6 +1,6 @@
 import React from 'react';
 import {useTags} from 'useTags';
-import {useParams} from 'react-router-dom';
+import {useParams, useHistory} from 'react-router-dom';
 import Layout from 'components/Layout';
 import styled from 'styled-components';
 import Icon from 'components/Icon';
@@ -29,6 +29,10 @@ const TagEdit: React.FC = () => {
   const {findTag, updateTag, deleteTag} = useTags();
   let {id: idString} = useParams<Params>(); // 拿到当前 url 的 id, 重命名为 idString
   const tag = findTag(parseInt(idString));
+  const history = useHistory()
+  const onClickBack = ()=>{
+    history.goBack()
+  }
   const tagContent = (tag: { id: number, name: string }) => (
     <div>
       <InputWrapper>
@@ -45,7 +49,7 @@ const TagEdit: React.FC = () => {
   return (
     <Layout>
       <Topbar>
-        <Icon name="left"/>
+        <Icon name="left" onClick={onClickBack}/>
         <span>编辑标签</span>
         <Icon/>
       </Topbar>
