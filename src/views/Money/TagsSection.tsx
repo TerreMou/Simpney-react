@@ -45,21 +45,9 @@ type Props = {
   onChange: (value: number[]) => void
 }
 const TagsSection: React.FC<Props> = (props) => {
-  const {tags, setTags} = useTags(); // tags 是 {id:1, name:'xxx'}的对象数组
+  const {tags, addTag} = useTags(); // tags 是 {id:1, name:'xxx'}的对象数组
   const selectedTagIds = props.value;
-  const onAddTag = () => {
-    const newTagName = window.prompt('请输入标签名');
-    const tagNames = tags.map(tag => tag.name);
-    if (newTagName !== null) {
-      if (tagNames.indexOf(newTagName) >= 0) {
-        window.alert('标签名重复了');
-      } else {
-        newTagName !== '' ?
-          setTags([...tags, {id: createId(), name: newTagName}]) :
-          window.alert('标签名不能为空');
-      }
-    }
-  };
+
   const onToggleTag = (tagId: number) => {
     const index = selectedTagIds.indexOf(tagId);
     if (index >= 0) {
@@ -81,7 +69,7 @@ const TagsSection: React.FC<Props> = (props) => {
           {tag.name}
         </li>)}
       </ol>
-      <button onClick={onAddTag}>新增标签</button>
+      <button onClick={addTag}>新增标签</button>
     </Wrapper>
   );
 };

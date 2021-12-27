@@ -35,6 +35,20 @@ const useTags = () => {
     setTags(tags.filter(tag => tag.id !== id));
   };
 
-  return {tags, setTags, findTag, updateTag, findTagIndex, deleteTag};
+  const addTag = () => {
+    const newTagName = window.prompt('请输入标签名');
+    const tagNames = tags.map(tag => tag.name);
+    if (newTagName !== null) {
+      if (tagNames.indexOf(newTagName.trim()) >= 0) {
+        window.alert('标签名重复了');
+      } else {
+        newTagName.trim() !== '' ?
+          setTags([...tags, {id: createId(), name: newTagName.trim()}]) :
+          window.alert('标签名不能为空');
+      }
+    }
+  };
+
+  return {tags, setTags, addTag, findTag, updateTag, findTagIndex, deleteTag};
 };
 export {useTags};
