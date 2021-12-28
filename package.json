@@ -1,6 +1,7 @@
 {
   "name": "morney-13",
   "version": "0.1.0",
+  "homepage": "https://terremou.github.io/Simpney-react-website/",
   "private": true,
   "dependencies": {
     "@babel/core": "7.9.0",
