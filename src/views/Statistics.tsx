@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ReactNode, useState} from 'react';
 import Layout from 'components/Layout';
 import {CategorySection} from './Money/CategorySection';
 import {RecordItem, useRecords} from 'hooks/useRecords';
@@ -29,7 +29,7 @@ const Header = styled.h3`
   line-height: 20px;
   padding: 10px 16px;
   color: #6c71b1;
-`
+`;
 
 function Statistics() {
   const [category, setCategory] = useState<'-' | '+'>('-');
@@ -57,16 +57,20 @@ function Statistics() {
     <Layout>
       <CategorySection value={category}
                        onChange={value => setCategory(value)}/>
-      {hashArray.map(([date,item]) =>
+      {hashArray.map(([date, item]) =>
         <div>
           <Header>{date}</Header>
           <div>
             {item.map(r => {
               return <Item key={r.createdAt}>
-                <div className="tags">
-                  {r.tagIds.map(tagId =>
-                    <span key={tagId}>{getTagName(tagId)}</span>
-                  )}
+                <div className="tags oneLine">
+                  {r.tagIds
+                    .map(tagId => <span key={tagId}>{getTagName(tagId)}</span>)
+                    .reduce((result, currentValue, index, array) =>
+                      result.concat(index < array.length - 1 ?
+                        [currentValue, '，'] :
+                        [currentValue]), [] as ReactNode[])
+                  }
                 </div>
                 {r.note && <div className="note">
                   {r.note}
