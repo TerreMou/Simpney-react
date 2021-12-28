@@ -53,7 +53,7 @@ const TagEdit: React.FC = () => {
         <span>编辑标签</span>
         <Icon/>
       </Topbar>
-      {tag ? tagContent(tag) : <ButtonWrapper>tag 不存在</ButtonWrapper>}
+      {tag ? tagContent(tag) : <ButtonWrapper><h3>标签已删除</h3></ButtonWrapper>}
     </Layout>
   );
 };
