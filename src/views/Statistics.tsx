@@ -5,6 +5,8 @@ import {RecordItem, useRecords} from 'hooks/useRecords';
 import day from 'dayjs';
 import {useTags} from 'hooks/useTags';
 import styled from 'styled-components';
+import {Chart} from '../components/Chart';
+import {EChartOption} from 'echarts';
 
 const Item = styled.div`
   display: flex;
@@ -30,6 +32,12 @@ const Header = styled.h3`
   padding: 10px 16px;
   color: #6c71b1;
 `;
+const ChartWrapper = styled.div`
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`
 
 function Statistics() {
   const [category, setCategory] = useState<'-' | '+'>('-');
@@ -53,12 +61,56 @@ function Statistics() {
     return 0;
   });
 
+  const [options, setOptions] = useState({
+    grid: {
+      left: 0,
+      right: 0,
+    },
+    xAxis: {
+      type: 'category',
+      data: hashArray.map(([date,item]) => date),
+      axisTick: {
+        alignWithLabel: true, // 横轴刻度和坐标对齐
+      },
+      axisLine: {
+        lineStyle: {color: '#666'}
+      },
+      axisLabel: {
+        formatter: function (value: string) {
+          return value.substring(5);
+        }
+      }
+    },
+    yAxis: {
+      type: 'value',
+      show: false
+    },
+    series: [{
+      data: hashArray.map(([date,item]) => item.map(r=>r.amount)),
+      type: 'line',
+      symbolSize: 12,
+      itemStyle: {borderWidth: 1, color: '$color-line'},
+      // symbol: 'circle',
+    }],
+    tooltip: {
+      show: true,
+      position: 'top',
+      formatter: '{c}',
+      triggerOn: 'click',
+    },
+  })
+
   return (
     <Layout>
       <CategorySection value={category}
                        onChange={value => setCategory(value)}/>
+      <ChartWrapper>
+        <div>hi</div>
+        <Chart options={options as EChartOption}/>
+      </ChartWrapper>
+
       {hashArray.map(([date, item]) =>
-        <div>
+        <div key={date}>
           <Header>{date}</Header>
           <div>
             {item.map(r => {
