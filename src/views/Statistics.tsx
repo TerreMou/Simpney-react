@@ -5,8 +5,6 @@ import {RecordItem, useRecords} from 'hooks/useRecords';
 import day from 'dayjs';
 import {useTags} from 'hooks/useTags';
 import styled from 'styled-components';
-import {Chart} from '../components/Chart';
-import {EChartOption} from 'echarts';
 
 const Item = styled.div`
   display: flex;
@@ -34,17 +32,6 @@ const Header = styled.h3`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-`;
-const ChartWrapper = styled.div`
-  overflow: auto;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  > .chart {
-    width: 430%;
-  }
 `;
 
 function Statistics() {
@@ -79,21 +66,29 @@ function Statistics() {
     return groupedResult;
   });
 
-  const [options, setOptions] = useState({});
+  const beautify = (date:string) => {
+    const currentDate = day().format('YYYY-MM-DD')
+    let ShowDate:string
+    if (date === currentDate) {
+      ShowDate = '今天'
+    } else if (date === (day().subtract(1, 'day')).format('YYYY-MM-DD') ) {
+      ShowDate = '昨天'
+    } else if (date === (day().subtract(2, 'day')).format('YYYY-MM-DD') ) {
+      ShowDate = '前天'
+    } else {
+      ShowDate = date
+    }
+    return ShowDate
+  }
 
   return (
     <Layout>
       <CategorySection value={category}
                        onChange={value => setCategory(value)}/>
-
-      <ChartWrapper>
-        <Chart className="chart" options={options as EChartOption}/>
-      </ChartWrapper>
-
       {hashArray.map(([date, item]) =>
         <div key={date}>
           <Header>
-            <div>{date}</div>
+            <div>{beautify(date)}</div>
             <div>
               ￥{groupedResult.map(obj => obj.title === date ?
                 obj.total : '')}
