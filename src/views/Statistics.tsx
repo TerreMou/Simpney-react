@@ -31,13 +31,21 @@ const Header = styled.h3`
   line-height: 20px;
   padding: 10px 16px;
   color: #6c71b1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 const ChartWrapper = styled.div`
   overflow: auto;
+
   &::-webkit-scrollbar {
     display: none;
   }
-`
+
+  > .chart {
+    width: 430%;
+  }
+`;
 
 function Statistics() {
   const [category, setCategory] = useState<'-' | '+'>('-');
@@ -60,58 +68,37 @@ function Statistics() {
     if (a[0] > b[0]) {return -1;}
     return 0;
   });
+  type Result = {
+    title?: string
+    total?: number
+  }
+  // groupedResult: [{'2021-12-29',10000},{'2021-12-27':500},{'2021-12-28':2000}]
+  const groupedResult: Result[] = [];
+  hashArray.map(([date, item]) => {
+    groupedResult.push({title: date, total: item.reduce((sum, i) => sum + i.amount, 0)});
+    return groupedResult;
+  });
 
-  const [options, setOptions] = useState({
-    grid: {
-      left: 0,
-      right: 0,
-    },
-    xAxis: {
-      type: 'category',
-      data: hashArray.map(([date,item]) => date),
-      axisTick: {
-        alignWithLabel: true, // 横轴刻度和坐标对齐
-      },
-      axisLine: {
-        lineStyle: {color: '#666'}
-      },
-      axisLabel: {
-        formatter: function (value: string) {
-          return value.substring(5);
-        }
-      }
-    },
-    yAxis: {
-      type: 'value',
-      show: false
-    },
-    series: [{
-      data: hashArray.map(([date,item]) => item.map(r=>r.amount)),
-      type: 'line',
-      symbolSize: 12,
-      itemStyle: {borderWidth: 1, color: '$color-line'},
-      // symbol: 'circle',
-    }],
-    tooltip: {
-      show: true,
-      position: 'top',
-      formatter: '{c}',
-      triggerOn: 'click',
-    },
-  })
+  const [options, setOptions] = useState({});
 
   return (
     <Layout>
       <CategorySection value={category}
                        onChange={value => setCategory(value)}/>
+
       <ChartWrapper>
-        <div>hi</div>
-        <Chart options={options as EChartOption}/>
+        <Chart className="chart" options={options as EChartOption}/>
       </ChartWrapper>
 
       {hashArray.map(([date, item]) =>
         <div key={date}>
-          <Header>{date}</Header>
+          <Header>
+            <div>{date}</div>
+            <div>
+              ￥{groupedResult.map(obj => obj.title === date ?
+                obj.total : '')}
+            </div>
+          </Header>
           <div>
             {item.map(r => {
               return <Item key={r.createdAt}>
